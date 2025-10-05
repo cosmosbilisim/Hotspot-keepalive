@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotspot Keepalive</title>
+  <script>
+    function ping() {
+      fetch("http://connectivitycheck.gstatic.com/generate_204", {cache: "no-store"})
+        .then(() => {
+          let now = new Date().toLocaleTimeString();
+          document.getElementById("status").innerText = "✅ Son ping: " + now;
+          console.log("✅ Ping atıldı: " + now);
+        })
+        .catch(err => {
+          let now = new Date().toLocaleTimeString();
+          document.getElementById("status").innerText = "❌ Hata: " + now;
+          console.log("❌ Ping hatası: " + err);
+        });
+    }
+    // Her 5 dakikada bir ping at
+    setInterval(ping, 300000);
+    window.onload = function() {
+      document.getElementById("status").innerText = "⏳ İlk ping gönderiliyor...";
+      ping(); // açıldığında hemen çalıştır
+    };
+  </script>
+</head>
+<body style="font-family: sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9;">
+  <h2>🔗 Hotspot Keepalive</h2>
+  <p>Bu sayfayı Safari'de açık bırakın.<br>Her 5 dakikada bir küçük ping gönderilir.</p>
+  <h3 id="status" style="color: green; margin-top: 30px;">Durum bekleniyor...</h3>
+</body>
+</html>
